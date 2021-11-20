@@ -1,0 +1,6 @@
+streamlit
+# pytube
+# moviepy
+SpeechRecognition
+beautifulsoup4
+requests
