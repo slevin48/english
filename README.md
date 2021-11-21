@@ -1,4 +1,4 @@
-# English teacher web app [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/slevin48/english/main)
+# English teacher web app [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/slevin48/english/main/app.py)
 Practice english with movie quotes
 
 ![app](app.png)
