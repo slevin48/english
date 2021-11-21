@@ -19,18 +19,17 @@ soup = BeautifulSoup(html, 'html.parser')
 # https://stackoverflow.com/questions/15724034/how-to-convert-wikipedia-wikitable-to-python-pandas-dataframe
 table = soup.find("table", attrs={"class":"wikitable"})
 tbody = table.find('tbody')
-thead = table.find('thead')
 rows = tbody.find_all('tr')
+
+# First row contains header
+header = [i.text.replace("\n","") for i in rows[0].find_all('th')]
+
 data = []
-# hrow = thead.find_all('th')
-# print(hrow)
-df = pd.DataFrame()
-for row in rows:
+for row in rows[1:]:
     cols = row.find_all('td')
     cols = [ele.text.strip() for ele in cols]
     data.append(cols)
-    df.append(pd.DataFrame(cols))
 
 # st.write(data)
-df = pd.DataFrame(data)
+df = pd.DataFrame(data,columns=header)
 st.table(df)
