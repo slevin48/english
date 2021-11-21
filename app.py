@@ -1,7 +1,6 @@
 import os
 import streamlit as st
 import requests as rq
-from bs4 import BeautifulSoup
 import pandas as pd
 from bokeh.models.widgets import Button
 from bokeh.models import CustomJS
@@ -25,35 +24,11 @@ st.title('English teacher')
 
 st.write('🎥 Learn with movie quotes 🎬')
 
-URL = "https://en.wikipedia.org/wiki/AFI%27s_100_Years...100_Movie_Quotes"
-
-r = rq.get(URL)
-html = r.text
-
-soup = BeautifulSoup(html, 'html.parser')
-
-# st.write(soup.prettify())
-# https://stackoverflow.com/questions/23377533/python-beautifulsoup-parsing-table
-# https://stackoverflow.com/questions/15724034/how-to-convert-wikipedia-wikitable-to-python-pandas-dataframe
-table = soup.find("table", attrs={"class":"wikitable"})
-tbody = table.find('tbody')
-rows = tbody.find_all('tr')
-
-# First row contains header
-header = [i.text.replace("\n","") for i in rows[0].find_all('th')]
-
-data = []
-for row in rows[1:]:
-    cols = row.find_all('td')
-    cols = [ele.text.strip() for ele in cols]
-    data.append(cols)
-
-# st.write(data)
-df = pd.DataFrame(data,columns=header)
-# st.table(df)
-
 st.markdown("Source: [AFI's 100 Years...100 Movie Quotes - wikipedia](https://en.wikipedia.org/wiki/AFI%27s_100_Years...100_Movie_Quotes)")
 
+
+df = pd.read_csv("movie_quotes_list.csv",index_col="Unnamed: 0")
+# st.table(df)
 
 # https://discuss.streamlit.io/t/data-frame-question-in-selectbox/1916/3
 values = df['Quotation'].tolist()
@@ -64,41 +39,41 @@ id = st.selectbox("Movie Quote",options,format_func=lambda x: dic[x])
 
 image = Image.open("posters/"+str(id+1))
 st.sidebar.image(image, caption=dic[id])
-st.sidebar.dataframe(df.iloc[id])
+st.dataframe(df.iloc[[id]].drop("Quotation", axis=1))
 
 ## Try Speech to Text
-stt_button = Button(label="Repeat Quote", width=100)
+# stt_button = Button(label="Repeat Quote", width=100)
 
-stt_button.js_on_event("button_click", CustomJS(code="""
-    var recognition = new webkitSpeechRecognition();
-    recognition.continuous = true;
-    recognition.interimResults = true;
+# stt_button.js_on_event("button_click", CustomJS(code="""
+#     var recognition = new webkitSpeechRecognition();
+#     recognition.continuous = true;
+#     recognition.interimResults = true;
  
-    recognition.onresult = function (e) {
-        var value = "";
-        for (var i = e.resultIndex; i < e.results.length; ++i) {
-            if (e.results[i].isFinal) {
-                value += e.results[i][0].transcript;
-            }
-        }
-        if ( value != "") {
-            document.dispatchEvent(new CustomEvent("GET_TEXT", {detail: value}));
-        }
-    }
-    recognition.start();
-    """))
+#     recognition.onresult = function (e) {
+#         var value = "";
+#         for (var i = e.resultIndex; i < e.results.length; ++i) {
+#             if (e.results[i].isFinal) {
+#                 value += e.results[i][0].transcript;
+#             }
+#         }
+#         if ( value != "") {
+#             document.dispatchEvent(new CustomEvent("GET_TEXT", {detail: value}));
+#         }
+#     }
+#     recognition.start();
+#     """))
 
-result = streamlit_bokeh_events(
-    stt_button,
-    events="GET_TEXT",
-    key="listen",
-    refresh_on_update=False,
-    override_height=75,
-    debounce_time=0)
+# result = streamlit_bokeh_events(
+#     stt_button,
+#     events="GET_TEXT",
+#     key="listen",
+#     refresh_on_update=False,
+#     override_height=75,
+#     debounce_time=0)
 
-if result:
-    if "GET_TEXT" in result:
-        st.write(result.get("GET_TEXT"))
+# if result:
+#     if "GET_TEXT" in result:
+#         st.write(result.get("GET_TEXT"))
 
 
 ## Watch Quote
