@@ -26,3 +26,19 @@ yt = YouTube(url)
 video = yt.streams.first()
 video.download('downloads/video_'+str(89))
 ```
+
+## Speech to Text
+
+Simple version based on CustomJS `webkitSpeechRecognition`
+
+![](https://aws1.discourse-cdn.com/business7/uploads/streamlit/original/2X/4/47c78068a5bf69e50cb96de15a90bd0091a9a482.gif)
+
+- https://discuss.streamlit.io/t/speech-to-text-on-client-side-using-html5-and-streamlit-bokeh-events/7888
+
+More advanced based on WebRTC
+- https://discuss.streamlit.io/t/new-component-streamlit-webrtc-a-new-way-to-deal-with-real-time-media-streams/8669
+- https://blog.streamlit.io/how-to-build-the-streamlit-webrtc-component/
+
+
+## Resources
+- https://github.com/mathworks/matlab-with-python/blob/master/mySpeechRecognizer.py

@@ -4,3 +4,6 @@ pytube
 SpeechRecognition
 beautifulsoup4
 requests
+streamlit_bokeh_events
+bokeh
+pydub
