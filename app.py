@@ -1,7 +1,11 @@
+import os
 import streamlit as st
 import requests as rq
 from bs4 import BeautifulSoup
 import pandas as pd
+from bokeh.models.widgets import Button
+from bokeh.models import CustomJS
+from streamlit_bokeh_events import streamlit_bokeh_events
 
 st.title('English teacher')
 
@@ -32,4 +36,20 @@ for row in rows[1:]:
 
 # st.write(data)
 df = pd.DataFrame(data,columns=header)
-st.table(df)
+# st.table(df)
+
+st.markdown("Source: [AFI's 100 Years...100 Movie Quotes - wikipedia](https://en.wikipedia.org/wiki/AFI%27s_100_Years...100_Movie_Quotes)")
+
+
+# https://discuss.streamlit.io/t/data-frame-question-in-selectbox/1916/3
+values = df['Quotation'].tolist()
+options = df.index.tolist()
+dic = dict(zip(options, values))
+
+id = st.selectbox("Movie Quote",options,format_func=lambda x: dic[x])
+# st.write(type(id))
+l = os.listdir("downloads/video_"+str(id))
+# st.write(l)
+video_file = open("downloads/video_"+str(id)+"/"+l[0], 'rb')
+video_bytes = video_file.read()
+st.video(video_bytes,'video/3gpp')
