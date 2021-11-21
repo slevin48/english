@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 
 downloads/
+downloads_3gpp/
+downloads_mp4/
+posters_V0/

@@ -1,5 +1,7 @@
-# English teacher web app
+# English teacher web app [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/slevin48/english/main)
 Practice english with movie quotes
+
+![app](app.png)
 
 ## Retrieve movie quotes from Youtube
 
@@ -7,7 +9,7 @@ https://pytube.io/en/latest/user/quickstart.html
 
 ![bond](bond.png)
 
-N°90: "A martini. Shaken, not stirred." Goldfinger
+    N°90: "A martini. Shaken, not stirred." Goldfinger
 
 https://www.youtube.com/watch?v=UUI65HYqQw0
 
@@ -42,3 +44,5 @@ More advanced based on WebRTC
 
 ## Resources
 - https://github.com/mathworks/matlab-with-python/blob/master/mySpeechRecognizer.py
+- https://github.com/FinnMcLaughlin/IMDbProject
+- https://medium.com/geekculture/end-to-end-movie-recommendation-system-49b29a8b57ac
